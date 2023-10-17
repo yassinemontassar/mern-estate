@@ -20,11 +20,14 @@ const userSchema = new mongoose.Schema({
         required: true,
 
     },
+    
+    avatar:{
+        type:String, 
+        default: "https://tse1.mm.bing.net/th/id/OIP.GHGGLYe7gDfZUzF_tElxiQHaHa?pid=ImgDet&rs=1"
+    },
 
-
-
-
-}, {timestamps: true});
+},
+ {timestamps: true});
 
 const User= mongoose.model('User', userSchema);
 export default User;
