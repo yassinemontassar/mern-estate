@@ -26,7 +26,9 @@ const handleFileUpload = (file) => {
 uploadTask.on('state_changed', 
 (snapshot) => {
   const progress=  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-setFilePerc(progress);
+   if (Math.round(progress) % 1 === 0) {
+      setFilePerc(Math.round(progress));
+    }
 },
 (error) => {
   setFileUploadError(true);
@@ -35,6 +37,7 @@ setFilePerc(progress);
   getDownloadURL(uploadTask.snapshot.ref).then 
   ((downloadURL)=>
     setFormData({ ... formData, avatar: downloadURL})
+   
   );
 }
 );
