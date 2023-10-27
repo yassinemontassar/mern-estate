@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay, EffectCube, Pagination } from "swiper/modules";
 import 'swiper/css/bundle';
 
 export default function Listing() {
@@ -11,7 +11,7 @@ export default function Listing() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const params = useParams()
-
+   
     useEffect(() => {
         const fetchListing = async () => {
           try {
@@ -42,7 +42,23 @@ export default function Listing() {
          
           {listing && !loading && !error && (
             <div>
-              <Swiper navigation>
+              <Swiper  effect={'cube'}
+        grabCursor={true}
+        cubeEffect={{
+          shadow: true,
+          slideShadows: true,
+          shadowOffset: 20,
+          shadowScale: 0.94,
+        }}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={true}
+        modules={[EffectCube, Pagination, Autoplay]}
+              
+              
+              navigation>
                 {listing.imageUrls.map((url) => (
                   <SwiperSlide key={url}> 
                     <div className="h-[550px]" 
@@ -53,6 +69,7 @@ export default function Listing() {
                         </div>
                   </SwiperSlide>
                 ))}
+                
               </Swiper>
             </div>
           )}
