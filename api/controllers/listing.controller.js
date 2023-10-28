@@ -94,25 +94,18 @@ export const getListings = async (req, res, next) => {
     }
 
     const searchTerm = req.query.searchTerm || '';
+
     const sort = req.query.sort || 'createdAt';
+
     const order = req.query.order || 'desc';
 
-    // New parameters for bedrooms and bathrooms
-    const bedrooms = parseInt(req.query.bedrooms) || undefined;
-    const bathrooms = parseInt(req.query.bathrooms) || undefined;
-
-    const query = {
+    const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
       offer,
       furnished,
       parking,
       type,
-      bedrooms,
-      bathrooms,
-    };
-
-
-    const listings = await Listing.find(query)
+    })
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
