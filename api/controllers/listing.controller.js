@@ -99,12 +99,18 @@ export const getListings = async (req, res, next) => {
 
     const order = req.query.order || 'desc';
 
+    const bedrooms = parseInt(req.query.bedrooms) || 0;
+const bathrooms = parseInt(req.query.bathrooms) || 0;
+
+
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
       offer,
       furnished,
       parking,
       type,
+      ...(bedrooms > 0 ? { bedrooms: { $eq: bedrooms } } : {}), 
+  ...(bathrooms > 0 ? { bathrooms: { $eq: bathrooms } } : {}),
     })
       .sort({ [sort]: order })
       .limit(limit)
