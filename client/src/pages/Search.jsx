@@ -60,7 +60,7 @@ setShowMore(false);
 const searchQuery = urlParams.toString();
 const res = await fetch(`/api/listing/get?${searchQuery}`);
 const data = await res.json();
-if (data.length > 8) {
+if (data.length > 7) {
     setShowMore(true);
 } else {
     setShowMore(false);
