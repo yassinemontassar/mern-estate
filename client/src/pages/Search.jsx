@@ -18,6 +18,7 @@ export default function Search() {
     const [loading, setLoading] = useState(false);
     const [listings, setListings]= useState([]);
     const [showMore, setShowMore] = useState(false);
+    const [totalListings, setTotalListings] = useState(0);
 
     useEffect (()=>{
 
@@ -67,6 +68,7 @@ if (data.length > 7) {
 }
 setListings(data);
 setLoading(false);
+
 };
 fetchListings();
 
@@ -266,7 +268,9 @@ setListings([...listings, ...data]);
         <div className='flex-1'>
         <h1 className='text-3xl font-semibold 
         border-b p-3 text-slate-700 m-5'>Listing results: </h1>
+        <p className='text-center'>Showing {listings.length}</p>
         <div className='p-7 flex flex-wrap gap-4'>
+            
         {!loading && listings.length === 0 &&(
             <p className='text-xl text-slate-700'>
                 No listing found!

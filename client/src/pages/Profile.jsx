@@ -4,6 +4,9 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from '../firebase';
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice.js";
 import { Link } from "react-router-dom";
+import { FaEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
+
 
 export default function Profile() {
   const fileRef = useRef(null)
@@ -155,7 +158,7 @@ method: 'DELETE',
 
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="p-3 mt-3 max-w-lg mx-auto bg-slate-300 rounded-3xl">
 <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
@@ -239,15 +242,14 @@ p-3 uppercase text-center hover:opacity-95 disabled:opacity-95" to={"/create-lis
                 <p>{listing.name}</p>
               </Link>
 
-              <div className='flex flex-col item-center'>
-                <button
+              <div className='flex flex-col item-center p-3 gap-2'>
+                <FaTrash
                   onClick={() => handleListingDelete(listing._id)}
-                  className='text-red-700 uppercase'
-                >
-                  Delete
-                </button>
+                  className="cursor-pointer"
+                />
                 <Link to={`/update-listing/${listing._id}`}>
-                  <button className='text-green-700 uppercase'>Edit</button>
+                  <FaEdit />
+
                 </Link>
               </div>
             </div>
