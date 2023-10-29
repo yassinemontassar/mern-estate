@@ -42,7 +42,7 @@ useEffect(() => {
                         </button>
                    
                 </form>
-                <ul className="flex gap-4">
+                <ul className="flex gap-4 items-center">
                     <Link to='/'>
                         <li className="hidden sm:inline text-slate-700 hover:underline">
                             Home
@@ -52,7 +52,7 @@ useEffect(() => {
                     </Link>
                     <Link to='/profile'>
                         {currentUser ? (
-                        <img className="rounded-full h-9 w-9 object-cover"   src={currentUser.avatar} alt="" />
+                        <img className="rounded-full h-9 w-9 object-cover hover:scale-125 transation-scale duration-75"   src={currentUser.avatar} alt="" />
                         ) : (
                         <li className=" text-slate-700 hover:underline">Sign In</li>
                         )}
