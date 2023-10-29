@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import ListingItem from '../components/ListingItem';
 
 export default function Search() {
     const navigate = useNavigate();
@@ -11,6 +12,8 @@ export default function Search() {
         offer: false, 
         sort: 'created_at',
         order: 'desc',
+        bedrooms: 0,
+        bathrooms: 0,
     });
     const [loading, setLoading] = useState(false);
     const [listings, setListings]= useState([]);
@@ -26,7 +29,8 @@ export default function Search() {
         const offerFromUrl = urlParams.get('offer');
         const sortFromUrl = urlParams.get('sort');
         const orderFromUrl = urlParams.get('order');
-
+        const bedroomsFromUrl = parseInt(urlParams.get('bedrooms')) || 0; // Parse bedrooms
+        const bathroomsFromUrl = parseInt(urlParams.get('bathrooms')) || 0;
         if(
         searchTermFromUrl ||
         typeFromUrl ||
@@ -34,7 +38,9 @@ export default function Search() {
         furnishedFromUrl ||
         offerFromUrl ||
         sortFromUrl ||
-        orderFromUrl 
+        orderFromUrl ||
+        bedroomsFromUrl ||
+        bathroomsFromUrl
             ) {
                 setSidebardata({
                     searchTerm : searchTermFromUrl || '',
@@ -44,6 +50,8 @@ export default function Search() {
                     offer: offerFromUrl === 'true' ? true: false,
                     sort: sortFromUrl || 'createdAt',
                     order: orderFromUrl || 'desc',
+                    bedrooms: bedroomsFromUrl, // Set bedrooms
+                    bathrooms: bathroomsFromUrl, // Set bathrooms
                 });
             }
 const fetchListings = async () =>{
@@ -65,6 +73,7 @@ fetchListings();
         setSidebardata({...sidebardata, type: e.target.id})
     }
 
+
     if(e.target.id === 'searchTerm' ){
         setSidebardata({...sidebardata, searchTerm: e.target.value})
     }
@@ -83,6 +92,10 @@ fetchListings();
         setSidebardata({...sidebardata, sort, order})
     }
 
+    if (e.target.id === 'bedrooms' || e.target.id === 'bathrooms') {
+        setSidebardata({ ...sidebardata, [e.target.id]: e.target.value });
+      }
+
     };
 
   const handleSubmit = (e) => {
@@ -95,6 +108,8 @@ fetchListings();
     urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
+    urlParams.set('bedrooms', sidebardata.bedrooms);
+    urlParams.set('bathrooms', sidebardata.bathrooms);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   }
@@ -175,6 +190,38 @@ fetchListings();
 
         </div>
 
+        <div className='flex gap-2 flex-wrap items-center'>
+        <label className='font-semibold'>Bedrooms:</label>
+        <div className='flex gap-2'>
+        <input
+              type='number'
+              min='0'
+              id='bedrooms'
+              className='p-2 border border-gray-500 rounded-lg w-14' 
+              value={sidebardata.bedrooms}
+              onChange={handleChange}
+            />
+        
+        </div>
+
+        <label className='font-semibold'>Bathrooms:</label>
+        <div className='flex gap-2'>
+        <input
+              type='number'
+              id='bathrooms'
+              min='0'
+              className='p-2 border border-gray-500 rounded-lg w-14' 
+              value={sidebardata.bathrooms}
+              onChange={handleChange}
+            />
+        
+        </div>
+
+
+        </div>
+
+        
+
         <div className='flex items-center gap-2'>
             <label className='font-semibold'>Sort:</label>
             <select 
@@ -194,10 +241,22 @@ fetchListings();
         </form>
         
         </div>
-        <div className=''>
+        <div className='flex-1'>
         <h1 className='text-3xl font-semibold 
         border-b p-3 text-slate-700 m-5'>Listing results: </h1>
-
+        <div className='p-7 flex flex-wrap gap-4'>
+        {!loading && listings.length === 0 &&(
+            <p className='text-xl text-slate-700'>
+                No listing found!
+            </p>
+        )}
+        {loading &&(
+        <p className='text-xl text-slate-700 text-center w-full'>Loading...</p>
+        )}
+        {!loading && listings && listings.map((listing) =>
+         < ListingItem key={listing._id} listing={listing}/>
+         )}
+        </div>
         </div>
 
     </div>
