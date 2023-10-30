@@ -47,7 +47,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div>
+    <div className="">
       {/* top */}
     <div className='flex flex-col gap-6 p-28 px-3 
     max-w-6xl mx-auto'>
@@ -68,6 +68,7 @@ useEffect(() => {
     text-blue-800 font-bold hover:underline">
       Let's get started...
     </Link>
+    <hr className="border-solid  border-t-2 border-slate-300"></hr>
     </div>
 
       {/* swiper */}
@@ -101,7 +102,11 @@ useEffect(() => {
       ))
     }
     </Swiper>
+    
+      
+         {/* listing results for offer, sale and rent */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      <hr className="border-solid  border-t-2 border-slate-300"></hr>
       {
         offerListings && offerListings.length > 0 && (
           <div className="">
@@ -121,6 +126,8 @@ useEffect(() => {
 
             </div>
         ) }
+
+<hr className="border-solid  border-t-2 border-slate-300"></hr>
 
 {
         rentListings && rentListings.length > 0 && (
@@ -142,7 +149,7 @@ useEffect(() => {
             </div>
         ) }
 
-
+<hr className="border-solid  border-t-2 border-slate-300"></hr>
 
 {
         saleListings && saleListings.length > 0 && (
@@ -165,7 +172,7 @@ useEffect(() => {
         ) }
  </div>
 
-      {/* listing results for offer, sale and rent */}
+   
 
     </div>
   )

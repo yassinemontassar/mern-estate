@@ -54,7 +54,7 @@ useEffect(() => {
                         {currentUser ? (
                         <img className="rounded-full h-9 w-9 object-cover hover:scale-125 transation-scale duration-75"   src={currentUser.avatar} alt="" />
                         ) : (
-                        <li className=" text-slate-700 hover:underline">Sign In</li>
+                        <li className=" text-slate-700 hover:underline whitespace-nowrap">Sign In</li>
                         )}
                         </Link>
                 </ul>
