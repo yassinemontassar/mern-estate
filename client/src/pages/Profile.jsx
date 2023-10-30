@@ -6,7 +6,7 @@ import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailur
 import { Link } from "react-router-dom";
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
-
+import {animateScroll} from 'react-scroll'
 
 export default function Profile() {
   const fileRef = useRef(null)
@@ -129,6 +129,15 @@ const handleShowListings = async () =>{
       return;
     }
     setUserListings(data);
+    const options = {
+      // Your options here, for example:
+      duration: 3000,
+      delay: 100,
+      isDynamic: true,
+      smooth: true
+    };
+    
+    animateScroll.scrollToBottom(options);
   } catch (error) {
     setShowListingsError(true);
   }
